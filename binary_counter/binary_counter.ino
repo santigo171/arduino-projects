@@ -1,9 +1,7 @@
 int led1 = 4;
 int led2 = 5;
-int led3 = 7;
-int led4 = 8;
-
-int message[4] = {0, 0, 0, 0};
+int led3 = 6;
+int led4 = 7;
 
 void setup()
 {
@@ -13,21 +11,21 @@ void setup()
     pinMode(led4, OUTPUT);
 }
 
-void turnLed(int binary[], int time_high)
+void turnLed(String binary, int time_high)
 {
-    if (binary[0] == 1)
+    if (binary[0] == "1")
     {
         digitalWrite(led1, HIGH);
     }
-    if (binary[1] == 1)
+    if (binary[1] == "1")
     {
         digitalWrite(led2, HIGH);
     }
-    if (binary[2] == 1)
+    if (binary[2] == "1")
     {
         digitalWrite(led3, HIGH);
     }
-    if (binary[3] == 1)
+    if (binary[3] == "1")
     {
         digitalWrite(led4, HIGH);
     }
@@ -40,35 +38,40 @@ void turnLed(int binary[], int time_high)
     digitalWrite(led4, LOW);
 }
 
-int binaryToDecimal(int binary[])
+int binaryToDecimal(String binary)
 {
-    int num1 = binary[0] * 1;
-    int num2 = binary[1] * 2;
-    int num3 = binary[2] * 4;
-    int num4 = binary[3] * 8;
+    int num1 = binary[0] * 8;
+    int num2 = binary[1] * 4;
+    int num3 = binary[2] * 2;
+    int num4 = binary[3] * 1;
     return num1 + num2 + num3 + num4;
 }
 
-int *plusOne(int binary[])
+String decimalToBinary(int decimal)
+{
+    String index = "";
+    while (decimal != 1) {
+        index = decimal % 2 + index; 
+    }
+}
+
+String plusOne(String binary)
 {
     int decimal = binaryToDecimal(binary);
     if (decimal == 15)
     {
-        return 0;
+        return "0000";
     }
     int result = decimal + 1;
-    int newMessage[4] = {};
-    for (int i = 3; i > -1; i = i - 1)
-    {
-        newMessage[i] = result % 2;
-    }
-    return newMessage;
+    return decimalToBinary(result);
 }
 
 void loop()
 {
-    // turnLed(message, 1000);
-    // turnLed(plusOne(message), 1000);
-    int xd[4] = {0, 1, 0, 1};
-    turnLed(xd, 3000);
+    String counter = "1111";
+//    while (true) {
+//        turnLed(counter, 1000);
+//        counter = plusOne(counter);
+//    }
+    turnLed(counter, 1000);
 }
